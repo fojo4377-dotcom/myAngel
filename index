@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>For Angel 💖</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff4da6, #8a2be2);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding: 40px 20px;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 25px;
+            max-width: 700px;
+            width: 95%;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 3rem);
+            margin-bottom: 20px;
+        }
+
+        button {
+            margin: 10px;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 30px;
+            background: #ff1493;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            background: #ff69b4;
+        }
+
+        video {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            margin-top: 20px;
+        }
+
+        #noBtn {
+            position: relative;
+        }
+
+        .star {
+            position: fixed;
+            top: -10px;
+            color: gold;
+            animation: fall 4s linear infinite;
+        }
+
+        @keyframes fall {
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(100vh); opacity: 0; }
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<canvas id="confettiCanvas"></canvas>
+
+<audio id="bgMusic" loop>
+    <source src="music/romantic1.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="finalMusic" loop>
+    <source src="music/romantic2.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+    <div class="card">
+        <h1>Hi Angel 💖</h1>
+        <button onclick="startExperience()">Continue 😌</button>
+    </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+    <div class="card">
+        <h1>You Make My Heart Race 💘</h1>
+        <p>
+            Angel, you are perfection.<br>
+            Your smile melts me.<br>
+            Your beauty is unreal.<br>
+            I’m addicted to you.
+        </p>
+        <button onclick="nextPage(3)">Next 😏</button>
+    </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+    <div class="card">
+        <h1>The Sexiest Video I Have of You 😮‍🔥</h1>
+
+        <video id="angelVideo" controls playsinline>
+            <source src="https://res.cloudinary.com/doj3hqxz3/video/upload/f_auto,q_auto/v1771116046/1_sefhwt.mp4" type="video/mp4">
+        </video>
+
+        <p style="margin-top:15px;">Send me more sexy and nasty videos 😈🔥</p>
+
+        <button onclick="stopVideoAndNext()">Continue 😈</button>
+    </div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="page4">
+    <div class="card">
+        <h1>Will you be mine forever Angel? 💍💖</h1>
+        <button id="yesBtn" onclick="celebrate()">YES 😍</button>
+        <button id="noBtn" onmouseover="moveNo()">NO 🙈</button>
+    </div>
+</div>
+
+<!-- PAGE 5 -->
+<div class="page" id="page5">
+    <div class="card">
+        <h1>I LOVE YOU ANGEL ❤️</h1>
+        <h2>From your boyfriend to be, FAVOUR 💕</h2>
+    </div>
+</div>
+
+<script>
+
+const bgMusic = document.getElementById("bgMusic");
+const finalMusic = document.getElementById("finalMusic");
+const video = document.getElementById("angelVideo");
+
+let yesScale = 1; // tracks YES button growth
+
+function startExperience() {
+    bgMusic.volume = 1.0;
+    bgMusic.play();
+    nextPage(2);
+}
+
+function nextPage(num) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById("page" + num).classList.add("active");
+}
+
+video.addEventListener("play", () => {
+    bgMusic.volume = 0.1;
+});
+
+video.addEventListener("pause", () => {
+    bgMusic.volume = 1.0;
+});
+
+function stopVideoAndNext() {
+    video.pause();
+    video.currentTime = 0;
+    bgMusic.volume = 1.0;
+    nextPage(4);
+}
+
+/* Runaway NO + Growing Glowing YES */
+function moveNo() {
+    const btn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+
+    // Move NO randomly
+    btn.style.position = "absolute";
+    btn.style.top = Math.random() * 70 + "%";
+    btn.style.left = Math.random() * 70 + "%";
+
+    // Grow YES slightly each time
+    yesScale += 0.05;
+    yesBtn.style.transform = `scale(${yesScale})`;
+
+    // Add glowing effect
+    yesBtn.style.boxShadow = "0 0 15px #fff, 0 0 30px #ff69b4, 0 0 45px #ff1493";
+}
+
+/* Celebrate */
+function celebrate() {
+    bgMusic.pause();
+    finalMusic.play();
+    nextPage(5);
+    launchConfetti();
+    startStars();
+}
+
+function launchConfetti() {
+    const canvas = document.getElementById("confettiCanvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let pieces = [];
+    for (let i = 0; i < 200; i++) {
+        pieces.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height - canvas.height,
+            size: Math.random() * 8 + 4,
+            speed: Math.random() * 3 + 2
+        });
+    }
+
+    function update() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        pieces.forEach(p => {
+            ctx.fillStyle = `hsl(${Math.random()*360},100%,60%)`;
+            ctx.fillRect(p.x, p.y, p.size, p.size);
+            p.y += p.speed;
+        });
+        requestAnimationFrame(update);
+    }
+
+    update();
+}
+
+function startStars() {
+    setInterval(() => {
+        const star = document.createElement("div");
+        star.classList.add("star");
+        star.innerHTML = "✨";
+        star.style.left = Math.random() * 100 + "vw";
+        star.style.fontSize = Math.random() * 20 + 15 + "px";
+        document.body.appendChild(star);
+        setTimeout(() => star.remove(), 4000);
+    }, 300);
+}
+
+</script>
+
+</body>
+</html>
