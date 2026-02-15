@@ -1,0 +1,1 @@
+follow onscreen instructions
